@@ -1,0 +1,182 @@
+==================================================
+ ONLINE COMPLAINT MANAGEMENT SYSTEM
+==================================================
+
+1. Register
+2. Login
+3. Exit
+Choose an option: Full name: Email: Password (min 4 chars): Registration successful. Your User ID is 1002. Please login.
+
+1. Register
+2. Login
+3. Exit
+Choose an option: Email: Password: Login successful. Welcome, Gous Master (USER)
+
+---- USER DASHBOARD (Gous Master) ----
+1. Submit a new complaint
+2. View my complaints
+3. Track complaint status by ID
+4. Give feedback on a resolved complaint
+5. Close a resolved complaint
+6. Logout
+Choose an option: Title: Description: Category options:
+  1. TECHNICAL
+  2. BILLING
+  3. SERVICE
+  4. PRODUCT
+  5. INFRASTRUCTURE
+  6. OTHER
+Choose Category (number): Priority options:
+  1. LOW
+  2. MEDIUM
+  3. HIGH
+  4. CRITICAL
+Choose Priority (number): Complaint submitted successfully! Your Complaint ID is: CMP-1001
+
+---- USER DASHBOARD (Gous Master) ----
+1. Submit a new complaint
+2. View my complaints
+3. Track complaint status by ID
+4. Give feedback on a resolved complaint
+5. Close a resolved complaint
+6. Logout
+Choose an option: Enter Complaint ID: 
+--------------------------------------------------
+Complaint ID   : CMP-1001
+Title          : Wifi not working in hostel block A
+Description    : The wifi router in hostel block A has been down since morning affecting 40 students
+Category       : TECHNICAL
+Priority       : LOW
+Status         : OPEN
+Created On     : 2026-07-14 18:11:24
+Last Updated   : 2026-07-14 18:11:24
+Assigned To    : Not yet assigned
+Resolution     : -
+Feedback       : -
+--------------------------------------------------
+
+---- USER DASHBOARD (Gous Master) ----
+1. Submit a new complaint
+2. View my complaints
+3. Track complaint status by ID
+4. Give feedback on a resolved complaint
+5. Close a resolved complaint
+6. Logout
+Choose an option: Logged out.
+
+1. Register
+2. Login
+3. Exit
+Choose an option: Email: Password: Login successful. Welcome, Admin (ADMIN)
+
+---- ADMIN DASHBOARD (Admin) ----
+1. View all complaints
+2. Filter complaints (status/category/priority)
+3. Assign a complaint to myself
+4. Update complaint status
+5. Add resolution note (marks Resolved)
+6. Search complaint by ID
+7. Logout
+Choose an option: 
+--------------------------------------------------
+Complaint ID   : CMP-1001
+Title          : Wifi not working in hostel block A
+Description    : The wifi router in hostel block A has been down since morning affecting 40 students
+Category       : TECHNICAL
+Priority       : LOW
+Status         : OPEN
+Created On     : 2026-07-14 18:11:24
+Last Updated   : 2026-07-14 18:11:24
+Assigned To    : Not yet assigned
+Resolution     : -
+Feedback       : -
+--------------------------------------------------
+
+---- ADMIN DASHBOARD (Admin) ----
+1. View all complaints
+2. Filter complaints (status/category/priority)
+3. Assign a complaint to myself
+4. Update complaint status
+5. Add resolution note (marks Resolved)
+6. Search complaint by ID
+7. Logout
+Choose an option: Enter Complaint ID: Complaint assigned to Admin.
+
+---- ADMIN DASHBOARD (Admin) ----
+1. View all complaints
+2. Filter complaints (status/category/priority)
+3. Assign a complaint to myself
+4. Update complaint status
+5. Add resolution note (marks Resolved)
+6. Search complaint by ID
+7. Logout
+Choose an option: Enter Complaint ID: Resolution note: Complaint marked as Resolved.
+
+---- ADMIN DASHBOARD (Admin) ----
+1. View all complaints
+2. Filter complaints (status/category/priority)
+3. Assign a complaint to myself
+4. Update complaint status
+5. Add resolution note (marks Resolved)
+6. Search complaint by ID
+7. Logout
+Choose an option: Logged out.
+
+1. Register
+2. Login
+3. Exit
+Choose an option: Email: Password: Login successful. Welcome, Gous Master (USER)
+
+---- USER DASHBOARD (Gous Master) ----
+1. Submit a new complaint
+2. View my complaints
+3. Track complaint status by ID
+4. Give feedback on a resolved complaint
+5. Close a resolved complaint
+6. Logout
+Choose an option: Enter Complaint ID: Complaint closed successfully.
+
+---- USER DASHBOARD (Gous Master) ----
+1. Submit a new complaint
+2. View my complaints
+3. Track complaint status by ID
+4. Give feedback on a resolved complaint
+5. Close a resolved complaint
+6. Logout
+Choose an option: Enter Complaint ID: Your feedback: Feedback recorded. Thank you!
+
+---- USER DASHBOARD (Gous Master) ----
+1. Submit a new complaint
+2. View my complaints
+3. Track complaint status by ID
+4. Give feedback on a resolved complaint
+5. Close a resolved complaint
+6. Logout
+Choose an option: 
+--------------------------------------------------
+Complaint ID   : CMP-1001
+Title          : Wifi not working in hostel block A
+Description    : The wifi router in hostel block A has been down since morning affecting 40 students
+Category       : TECHNICAL
+Priority       : LOW
+Status         : CLOSED
+Created On     : 2026-07-14 18:11:24
+Last Updated   : 2026-07-14 18:11:24
+Assigned To    : Admin
+Resolution     : Router was rebooted and firmware updated, issue fixed
+Feedback       : Issue was resolved quickly, thank you
+--------------------------------------------------
+
+---- USER DASHBOARD (Gous Master) ----
+1. Submit a new complaint
+2. View my complaints
+3. Track complaint status by ID
+4. Give feedback on a resolved complaint
+5. Close a resolved complaint
+6. Logout
+Choose an option: Logged out.
+
+1. Register
+2. Login
+3. Exit
+Choose an option: Thank you for using the Complaint Management System. Goodbye!

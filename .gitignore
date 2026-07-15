@@ -1,0 +1,24 @@
+# Compiled class files
+bin/
+*.class
+
+# Maven build output (backend/)
+backend/target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Runtime data - keep folder structure but not real data dumps
+data/*.txt
+!data/.gitkeep
+logs/*.log
+!logs/.gitkeep

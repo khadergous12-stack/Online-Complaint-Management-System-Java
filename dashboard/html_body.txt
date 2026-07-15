@@ -1,0 +1,529 @@
+﻿
+
+
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="brand">
+      <div class="brand-mark">CD</div>
+      <div class="brand-name">ComplaintDesk</div>
+    </div>
+    <p class="login-sub" id="loginSub">Sign in to the ticket console.</p>
+
+    <div class="error-msg" id="authError"></div>
+
+    <div id="nameField" class="field" style="display:none;">
+      <label>Full name</label>
+      <input type="text" id="regName" placeholder="Enter your name">
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="authEmail" placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="authPassword" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢">
+    </div>
+
+    <button class="btn btn-block" id="authSubmitBtn" onclick="submitAuth()">Sign in</button>
+
+    <div class="toggle-row">
+      <span id="toggleText">New here?</span> <a onclick="toggleAuthMode()" id="toggleLink">Create an account</a>
+    </div>
+
+    <div class="hint-box">
+      <b>Demo accounts</b><br>
+      Admin â€” admin@example.com / admin<br>
+      Student â€” user@example.com / user
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div id="appScreen">
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">CD</div>
+      <div class="brand-name">ComplaintDesk</div>
+    </div>
+    <div class="user-chip">
+      <span class="role-badge" id="roleBadge">USER</span>
+      <div class="avatar" id="avatarInitial">U</div>
+      <span id="currentUserName" style="font-size:13.5px;"></span>
+      <button class="btn btn-ghost btn-sm" onclick="logout()">Log out</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <h4>Queue</h4>
+      <div id="statusFilters"></div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="main-header">
+        <h2 id="mainHeading">My Tickets</h2>
+        <div class="search-row" id="searchRow" style="display:none;">
+          <input type="text" id="searchInput" placeholder="Search tickets..." oninput="onSearchInput()">
+        </div>
+        <button class="btn" id="newTicketBtn" onclick="openNewTicketModal()">+ New Ticket</button>
+      </div>
+      <div class="ticket-grid" id="ticketGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="display">No tickets here yet</div>
+        <div>Once tickets land in this view, they'll show up here.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DETAIL DRAWER ============ -->
+<div class="overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div class="drawer-head-top">
+      <div>
+        <div class="ticket-id mono" id="drawerId"></div>
+        <div class="ticket-title" id="drawerTitle" style="font-size:16px;margin-top:4px;"></div>
+      </div>
+      <button class="close-x" onclick="closeDrawer()">Ã—</button>
+    </div>
+    <div id="drawerTracker"></div>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-section">
+      <h5>Description</h5>
+      <div class="drawer-desc" id="drawerDesc"></div>
+    </div>
+    <div class="drawer-section">
+      <h5>Details</h5>
+      <div class="meta-grid">
+        <div><span>Category</span><b id="drawerCategory"></b></div>
+        <div><span>Priority</span><b id="drawerPriority"></b></div>
+        <div><span>Assigned to</span><b id="drawerAssignee"></b></div>
+        <div><span>Last updated</span><b id="drawerUpdated"></b></div>
+      </div>
+    </div>
+    <div class="drawer-section" id="drawerActions">
+      <h5>Actions</h5>
+      <div class="action-row" id="actionButtons"></div>
+    </div>
+    <div class="drawer-section">
+      <h5>Comments</h5>
+      <div id="commentList"></div>
+    </div>
+  </div>
+  <div class="drawer-foot">
+    <div class="comment-input-row">
+      <input type="text" id="commentInput" placeholder="Add a comment...">
+      <button class="btn btn-sm" onclick="submitComment()">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NEW TICKET MODAL ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Raise a new ticket</h3>
+    <div class="field">
+      <label>Title</label>
+      <input type="text" id="ntTitle" placeholder="Short summary of the issue">
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea id="ntDesc" rows="3" placeholder="Describe the issue in detail (min 10 characters)"></textarea>
+    </div>
+    <div class="form-row-2">
+      <div class="field">
+        <label>Category</label>
+        <select id="ntCategory">
+          <option value="IT">IT</option>
+          <option value="Facility">Facility</option>
+          <option value="Academic">Academic</option>
+          <option value="Finance">Finance</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Priority</label>
+        <select id="ntPriority">
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+    </div>
+    <div class="error-msg" id="ntError"></div>
+    <div style="display:flex;gap:10px;margin-top:6px;">
+      <button class="btn btn-ghost" style="flex:1;" onclick="closeNewTicketModal()">Cancel</button>
+      <button class="btn" style="flex:1;" onclick="submitNewTicket()">Submit ticket</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'http://localhost:8080/api';
+
+let state = {
+  token: localStorage.getItem('cd_token') || null,
+  userId: localStorage.getItem('cd_userId') || null,
+  name: localStorage.getItem('cd_name') || null,
+  role: localStorage.getItem('cd_role') || null,
+  authMode: 'login',
+  activeStatusFilter: null,
+  tickets: [],
+  currentTicketId: null,
+};
+
+const STATUS_ORDER = ['OPEN','IN_PROGRESS','RESOLVED','CLOSED'];
+const STATUS_LABEL = {OPEN:'Open', IN_PROGRESS:'In Progress', RESOLVED:'Resolved', CLOSED:'Closed'};
+const STATUS_DOT = {OPEN:'var(--amber)', IN_PROGRESS:'var(--cyan)', RESOLVED:'var(--green)', CLOSED:'var(--gray)'};
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(()=> t.style.display = 'none', 2600);
+}
+
+function timeAgo(iso){
+  const diff = (Date.now() - new Date(iso).getTime())/1000;
+  if(diff < 60) return 'just now';
+  if(diff < 3600) return Math.floor(diff/60)+'m ago';
+  if(diff < 86400) return Math.floor(diff/3600)+'h ago';
+  return Math.floor(diff/86400)+'d ago';
+}
+
+// ---------------- AUTH ----------------
+function toggleAuthMode(){
+  state.authMode = state.authMode === 'login' ? 'register' : 'login';
+  const isRegister = state.authMode === 'register';
+  document.getElementById('nameField').style.display = isRegister ? 'block' : 'none';
+  document.getElementById('authSubmitBtn').textContent = isRegister ? 'Create account' : 'Sign in';
+  document.getElementById('loginSub').textContent = isRegister ? 'Register a new student account.' : 'Sign in to the ticket console.';
+  document.getElementById('toggleText').textContent = isRegister ? 'Already have an account?' : 'New here?';
+  document.getElementById('toggleLink').textContent = isRegister ? 'Sign in instead' : 'Create an account';
+  hideAuthError();
+}
+
+function showAuthError(msg){
+  const el = document.getElementById('authError');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+function hideAuthError(){ document.getElementById('authError').style.display = 'none'; }
+
+async function submitAuth(){
+  hideAuthError();
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  if(!email || !password){ showAuthError('Enter both email and password.'); return; }
+
+  try{
+    if(state.authMode === 'register'){
+      const name = document.getElementById('regName').value.trim();
+      if(!name){ showAuthError('Enter your full name.'); return; }
+      const res = await fetch(`${API}/users/register`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({name, email, password})
+      });
+      if(!res.ok){ const e = await res.json().catch(()=>({})); throw new Error(e.error || 'Registration failed.'); }
+      showToast('Account created â€” please sign in.');
+      toggleAuthMode();
+      return;
+    }
+    const res = await fetch(`${API}/auth/login`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({email, password})
+    });
+    if(!res.ok){ throw new Error('Invalid email or password.'); }
+    const data = await res.json();
+    state.token = data.token; state.userId = data.userId; state.name = data.name; state.role = data.role;
+    localStorage.setItem('cd_token', data.token);
+    localStorage.setItem('cd_userId', data.userId);
+    localStorage.setItem('cd_name', data.name);
+    localStorage.setItem('cd_role', data.role);
+    enterApp();
+  }catch(err){
+    showAuthError(err.message || 'Could not reach the API. Is the backend running on localhost:8080?');
+  }
+}
+
+function logout(){
+  localStorage.removeItem('cd_token'); localStorage.removeItem('cd_userId');
+  localStorage.removeItem('cd_name'); localStorage.removeItem('cd_role');
+  state = {...state, token:null, userId:null, name:null, role:null};
+  document.getElementById('appScreen').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+function enterApp(){
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appScreen').style.display = 'block';
+  document.getElementById('currentUserName').textContent = state.name;
+  document.getElementById('avatarInitial').textContent = state.name.charAt(0).toUpperCase();
+  const badge = document.getElementById('roleBadge');
+  badge.textContent = state.role;
+  badge.className = 'role-badge' + (state.role === 'ADMIN' ? ' admin' : '');
+
+  document.getElementById('mainHeading').textContent = state.role === 'ADMIN' ? 'All Tickets' : 'My Tickets';
+  document.getElementById('newTicketBtn').style.display = state.role === 'ADMIN' ? 'none' : 'inline-flex';
+  document.getElementById('searchRow').style.display = state.role === 'ADMIN' ? 'flex' : 'none';
+  document.getElementById('sidebar').style.display = state.role === 'ADMIN' ? 'block' : 'none';
+
+  if(state.role === 'ADMIN'){ renderStatusFilters(); }
+  loadTickets();
+}
+
+// ---------------- API HELPERS ----------------
+async function api(path, opts={}){
+  const res = await fetch(`${API}${path}`, {
+    ...opts,
+    headers: {'Content-Type':'application/json', 'X-Auth': state.token, ...(opts.headers||{})}
+  });
+  if(res.status === 401){ showToast('Session expired â€” please sign in again.'); logout(); throw new Error('Unauthorized'); }
+  if(!res.ok){
+    let msg = 'Request failed';
+    try{ const body = await res.json(); msg = body.error || body.message || msg; }catch(e){}
+    throw new Error(msg);
+  }
+  return res.status === 204 ? null : res.json();
+}
+
+// ---------------- TICKET LIST ----------------
+async function loadTickets(){
+  try{
+    if(state.role === 'ADMIN'){
+      const q = document.getElementById('searchInput').value.trim();
+      const params = new URLSearchParams();
+      if(state.activeStatusFilter) params.set('status', state.activeStatusFilter);
+      if(q) params.set('q', q);
+      state.tickets = await api(`/complaints/search?${params.toString()}`);
+      renderStatusFilters();
+    } else {
+      state.tickets = await api('/complaints/mine');
+    }
+    renderTickets();
+  }catch(err){
+    showToast(err.message || 'Could not load tickets.');
+  }
+}
+
+let searchDebounce;
+function onSearchInput(){
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(loadTickets, 350);
+}
+
+function renderStatusFilters(){
+  const box = document.getElementById('statusFilters');
+  const counts = {};
+  STATUS_ORDER.forEach(s => counts[s] = 0);
+  state.tickets.forEach(t => counts[t.status] = (counts[t.status]||0) + 1);
+
+  let html = `<div class="status-filter ${!state.activeStatusFilter ? 'active':''}" onclick="setStatusFilter(null)">
+      <span class="status-filter-label">All tickets</span><span class="count">${state.tickets.length}</span></div>`;
+  STATUS_ORDER.forEach(s => {
+    html += `<div class="status-filter ${state.activeStatusFilter===s ? 'active':''}" onclick="setStatusFilter('${s}')">
+      <span class="status-filter-label"><span class="dot" style="background:${STATUS_DOT[s]}"></span>${STATUS_LABEL[s]}</span>
+      <span class="count">${counts[s]||0}</span></div>`;
+  });
+  box.innerHTML = html;
+}
+
+function setStatusFilter(status){
+  state.activeStatusFilter = status;
+  loadTickets();
+}
+
+function renderTickets(){
+  const grid = document.getElementById('ticketGrid');
+  const empty = document.getElementById('emptyState');
+  if(state.tickets.length === 0){
+    grid.innerHTML = ''; empty.style.display = 'block'; return;
+  }
+  empty.style.display = 'none';
+  grid.innerHTML = state.tickets.map(t => ticketCardHtml(t)).join('');
+}
+
+function priorityChipClass(p){
+  return p === 'High' ? 'chip-high' : p === 'Medium' ? 'chip-medium' : 'chip-low';
+}
+
+function trackerHtml(status, size){
+  const idx = STATUS_ORDER.indexOf(status);
+  const nodes = STATUS_ORDER.map((s,i) => {
+    let cls = '';
+    if(i < idx) cls = 'done';
+    if(i === idx) cls = status === 'CLOSED' ? 'closed' : 'current';
+    return `<div class="tracker-node ${cls}"></div>`;
+  }).join('');
+  const steps = STATUS_ORDER.slice(0,-1).map((s,i) => {
+    const cls = i < idx ? 'done' : '';
+    return `<div class="tracker-step ${cls}"></div>`;
+  });
+  // interleave nodes and steps: node, step, node, step, node, step, node
+  let row = '';
+  STATUS_ORDER.forEach((s,i) => {
+    let cls = '';
+    if(i < idx) cls = 'done';
+    if(i === idx) cls = status === 'CLOSED' ? 'closed' : 'current';
+    row += `<div class="tracker-node ${cls}" title="${STATUS_LABEL[s]}"></div>`;
+    if(i < STATUS_ORDER.length - 1){
+      row += `<div class="tracker-step ${i < idx ? 'done':''}"></div>`;
+    }
+  });
+  const labels = size === 'lg' ? `<div class="tracker-labels">${STATUS_ORDER.map(s=>`<span>${STATUS_LABEL[s]}</span>`).join('')}</div>` : '';
+  return `<div class="tracker">${row}</div>${labels}`;
+}
+
+function ticketCardHtml(t){
+  return `<div class="ticket-card" onclick="openDrawer(${t.id})">
+    <div class="ticket-top">
+      <span class="ticket-id mono">CMP-${t.id}</span>
+      <span class="chip ${priorityChipClass(t.priority)}">${t.priority}</span>
+    </div>
+    <div class="ticket-title">${escapeHtml(t.title)}</div>
+    <div class="ticket-desc">${escapeHtml(t.description)}</div>
+    ${trackerHtml(t.status)}
+    <div class="ticket-foot">
+      <span class="cat-tag">${t.category}</span>
+      <span>${timeAgo(t.updatedAt)}</span>
+    </div>
+  </div>`;
+}
+
+function escapeHtml(s){
+  const d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+}
+
+// ---------------- DRAWER ----------------
+async function openDrawer(id){
+  state.currentTicketId = id;
+  try{
+    const t = await api(`/complaints/${id}`);
+    document.getElementById('drawerId').textContent = 'CMP-' + t.id;
+    document.getElementById('drawerTitle').textContent = t.title;
+    document.getElementById('drawerTracker').innerHTML = trackerHtml(t.status, 'lg');
+    document.getElementById('drawerDesc').textContent = t.description;
+    document.getElementById('drawerCategory').textContent = t.category;
+    document.getElementById('drawerPriority').textContent = t.priority;
+    document.getElementById('drawerAssignee').textContent = t.assignee ? ('Admin #' + t.assignee) : 'Unassigned';
+    document.getElementById('drawerUpdated').textContent = timeAgo(t.updatedAt);
+
+    document.getElementById('actionButtons').innerHTML = actionButtonsHtml(t);
+    document.getElementById('commentList').innerHTML = t.comments.length
+      ? t.comments.map(c => `<div class="comment">
+          <div class="comment-head"><span class="comment-author">${escapeHtml(c.authorName)}</span><span class="comment-time">${timeAgo(c.createdAt)}</span></div>
+          <div class="comment-text">${escapeHtml(c.text)}</div>
+        </div>`).join('')
+      : '<div style="color:var(--text-dim);font-size:12.5px;">No comments yet.</div>';
+
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawerOverlay').classList.add('open');
+  }catch(err){
+    showToast(err.message || 'Could not load ticket.');
+  }
+}
+
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+}
+
+function actionButtonsHtml(t){
+  const buttons = [];
+  if(state.role === 'ADMIN'){
+    if(t.status === 'OPEN'){
+      buttons.push(`<button class="btn btn-sm" onclick="assignToMe(${t.id})">Assign to me</button>`);
+    }
+    if(t.status === 'IN_PROGRESS'){
+      buttons.push(`<button class="btn btn-sm" onclick="changeStatus(${t.id}, 'RESOLVED')">Mark Resolved</button>`);
+    }
+    if(t.status !== 'CLOSED'){
+      buttons.push(`<button class="btn btn-ghost btn-sm" onclick="changeStatus(${t.id}, 'CLOSED')">Force Close</button>`);
+    }
+  } else {
+    if(t.status === 'RESOLVED' && String(t.userId) === String(state.userId)){
+      buttons.push(`<button class="btn btn-sm" onclick="changeStatus(${t.id}, 'CLOSED')">Close Ticket</button>`);
+    }
+  }
+  return buttons.length ? buttons.join('') : '<span style="color:var(--text-dim);font-size:12.5px;">No actions available at this stage.</span>';
+}
+
+async function assignToMe(id){
+  try{
+    await api(`/complaints/${id}/assign`, {method:'PATCH', body: JSON.stringify({})});
+    showToast('Ticket assigned to you.');
+    await openDrawer(id); await loadTickets();
+  }catch(err){ showToast(err.message); }
+}
+
+async function changeStatus(id, status){
+  try{
+    await api(`/complaints/${id}/status`, {method:'PATCH', body: JSON.stringify({status})});
+    showToast('Status updated to ' + STATUS_LABEL[status] + '.');
+    await openDrawer(id); await loadTickets();
+  }catch(err){ showToast(err.message); }
+}
+
+async function submitComment(){
+  const input = document.getElementById('commentInput');
+  const text = input.value.trim();
+  if(!text || !state.currentTicketId) return;
+  try{
+    await api(`/complaints/${state.currentTicketId}/comments`, {method:'POST', body: JSON.stringify({text})});
+    input.value = '';
+    await openDrawer(state.currentTicketId);
+  }catch(err){ showToast(err.message); }
+}
+
+// ---------------- NEW TICKET MODAL ----------------
+function openNewTicketModal(){
+  document.getElementById('ntTitle').value = '';
+  document.getElementById('ntDesc').value = '';
+  document.getElementById('ntError').style.display = 'none';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeNewTicketModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
+
+async function submitNewTicket(){
+  const title = document.getElementById('ntTitle').value.trim();
+  const description = document.getElementById('ntDesc').value.trim();
+  const category = document.getElementById('ntCategory').value;
+  const priority = document.getElementById('ntPriority').value;
+  const errEl = document.getElementById('ntError');
+  errEl.style.display = 'none';
+  try{
+    await api('/complaints', {method:'POST', body: JSON.stringify({title, description, category, priority})});
+    closeNewTicketModal();
+    showToast('Ticket submitted.');
+    loadTickets();
+  }catch(err){
+    errEl.textContent = err.message || 'Could not submit ticket.';
+    errEl.style.display = 'block';
+  }
+}
+
+// Allow Enter key on comment input
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('commentInput').addEventListener('keydown', e => { if(e.key === 'Enter') submitComment(); });
+  document.getElementById('authPassword').addEventListener('keydown', e => { if(e.key === 'Enter') submitAuth(); });
+
+  if(state.token && state.userId && state.role){
+    enterApp();
+  }
+});
+</script>
+</body>
+</html>
+
+
+
