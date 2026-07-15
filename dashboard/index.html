@@ -447,7 +447,7 @@
     </div>
     <div class="user-chip">
       <span class="role-badge" id="roleBadge">USER</span>
-      <div class="avatar" id="avatarInitial">U</div>
+      <div class="avatar" id="avatarInitial">👤</div>
       <span id="currentUserName" style="font-size:13.5px;"></span>
       <button class="btn btn-ghost btn-sm" onclick="logout()">Log out</button>
     </div>
@@ -691,7 +691,7 @@ function enterApp(){
   document.getElementById('welcomeScreen').style.display = 'none';
   document.getElementById('appScreen').style.display = 'block';
   document.getElementById('currentUserName').textContent = state.name;
-  document.getElementById('avatarInitial').textContent = state.name.charAt(0).toUpperCase();
+  document.getElementById('avatarInitial').textContent = '👤';
   const badge = document.getElementById('roleBadge');
   badge.textContent = state.role;
   badge.className = 'role-badge' + (state.role === 'ADMIN' ? ' admin' : '');
