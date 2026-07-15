@@ -1,14 +1,31 @@
 services:
+  # ─── 1. Java Spring Boot Backend (Docker) ─────────────────────────────────
   - type: web
     name: complaintdesk-api
-    env: java
+    env: docker
     region: singapore
     plan: free
     rootDir: backend
-    buildCommand: mvn clean package -DskipTests
-    startCommand: java -jar target/complaint-app.jar
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: PORT
         value: 10000
       - key: SPRING_PROFILES_ACTIVE
         value: prod
+
+  # ─── 2. HTML Dashboard Frontend (Static Site) ─────────────────────────────
+  - type: web
+    name: complaintdesk-ui
+    env: static
+    region: singapore
+    plan: free
+    rootDir: dashboard
+    staticPublishPath: .
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
