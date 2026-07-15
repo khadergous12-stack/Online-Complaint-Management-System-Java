@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ComplaintDesk Ã¢â‚¬â€ Ticket Console</title>
+<title>ComplaintDesk — Ticket Console</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -432,7 +432,7 @@
     </div>
 
     <div style="text-align:center; margin-top:32px;">
-      <a style="color:var(--text-dim); cursor:pointer; font-size:14px; text-decoration:none; font-weight:600;" onclick="goBackToWelcome()">â† Back to Home</a>
+      <a style="color:var(--text-dim); cursor:pointer; font-size:14px; text-decoration:none; font-weight:600;" onclick="goBackToWelcome()">← Back to Home</a>
     </div>
   </div>
 </div>
@@ -486,7 +486,7 @@
         <div class="ticket-id mono" id="drawerId"></div>
         <div class="ticket-title" id="drawerTitle" style="font-size:16px;margin-top:4px;"></div>
       </div>
-      <button class="close-x" onclick="closeDrawer()">Ãƒâ€”</button>
+      <button class="close-x" onclick="closeDrawer()">Ãƒ—</button>
     </div>
     <div id="drawerTracker"></div>
   </div>
@@ -655,7 +655,7 @@ async function submitAuth(){
         body: JSON.stringify({name, email, password})
       });
       if(!res.ok){ const e = await res.json().catch(()=>({})); throw new Error(e.error || 'Registration failed.'); }
-      showToast('Account created Ã¢â‚¬â€ please sign in.');
+      showToast('Account created — please sign in.');
       toggleAuthMode();
       return;
     }
@@ -710,7 +710,7 @@ async function api(path, opts={}){
     ...opts,
     headers: {'Content-Type':'application/json', 'X-Auth': state.token, ...(opts.headers||{})}
   });
-  if(res.status === 401){ showToast('Session expired Ã¢â‚¬â€ please sign in again.'); logout(); throw new Error('Unauthorized'); }
+  if(res.status === 401){ showToast('Session expired — please sign in again.'); logout(); throw new Error('Unauthorized'); }
   if(!res.ok){
     let msg = 'Request failed';
     try{ const body = await res.json(); msg = body.error || body.message || msg; }catch(e){}
