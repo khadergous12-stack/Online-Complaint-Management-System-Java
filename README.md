@@ -7,7 +7,19 @@ This project ships as **two complete, independent builds** in one repository, ma
 | **Console App** | `src/`, `data/`, `logs/`, `outputs/` | Core Java, OOP, file-handling console application (Option B — recommended for students) |
 | **REST API + Dashboard** | `backend/`, `dashboard/` | Spring Boot JSON API with a visual web dashboard (placement/demo-ready) |
 
+
 Pick whichever you need, or use both — they don't share code or data and can be demoed independently. `docs/` and the screenshots checklist apply mainly to the console build; see `README.md` inside `backend/` for the API build's own run instructions.
+
+---
+
+## 🚀 Live Demo (Deployed on Render)
+
+| Service | URL | Description |
+|---|---|---|
+| 🌐 **Web Dashboard** | [complaintdesk-ui.onrender.com](https://complaintdesk-ui.onrender.com) | Interactive frontend — Welcome screen, Login, Signup, Ticket console |
+| ⚙️ **Java REST API** | [complaintdesk-api-2h3l.onrender.com](https://complaintdesk-api-2h3l.onrender.com) | Spring Boot backend — all JSON endpoints live |
+
+> **Note:** Free tier services on Render spin down after 15 minutes of inactivity. The first request may take 30–60 seconds to wake up. This is normal behavior for free-tier deployments.
 
 ---
 
